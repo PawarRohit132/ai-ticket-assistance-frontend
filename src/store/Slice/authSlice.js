@@ -42,6 +42,7 @@ export const userLogin = createAsyncThunk(
       const response = await axiosInstance.post("/v1/users/login", data, {
         withCredentials: true,
       });
+      localStorage.setItem("accessToken", response.data.data.accessToken);
 
       toast.success(response.data.data);
 
@@ -57,6 +58,7 @@ export const userLogin = createAsyncThunk(
 export const userLogout = createAsyncThunk("logout", async () => {
   try {
     const response = await axiosInstance.post("/v1/users/logout");
+    localStorage.removeItem("accessToken");
     toast.success(response.data.message);
     return response.data.data;
   } catch (error) {
