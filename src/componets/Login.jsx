@@ -107,7 +107,7 @@ function Login() {
             type="submit"
             className="w-full rounded-xl bg-cyan-400 py-3 text-sm font-semibold text-slate-900 hover:bg-cyan-300 transition-all duration-300 shadow-lg shadow-cyan-500/20"
           >
-            {loading ? "Loading" : "Login"}
+            {loading ? "Please Wait...." : "Login"}
           </button>
           {loginError && (
             <p className="text-red-400 text-sm text-center mb-4 bg-red-500/10 border border-red-500/30 p-2 rounded-md">
