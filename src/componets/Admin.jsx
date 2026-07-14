@@ -42,7 +42,7 @@ function Admin({ users }) {
           <h1 className="text-4xl font-bold">
             Admin <span className="text-cyan-400">Panel</span>
           </h1>
-          <p className="text-slate-400 mt-2">Manage all registered {users.length} users</p>
+          <p className="text-slate-400 mt-2">Manage all registered users</p>
           <div className="mt-4 h-px bg-gradient-to-r from-cyan-400/50 to-transparent"></div>
         </div>
 
