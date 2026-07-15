@@ -9,6 +9,7 @@ import { userLogin, getCurrentUser } from "../store/Slice/authSlice.js";
 import { useForm } from "react-hook-form";
 import { clearLoginError } from "../store/Slice/authSlice.js";
 import { useEffect } from "react";
+import ButtonLoading from "../componets/ButtonLoading.jsx"
 
 function Login() {
   const navigate = useNavigate();
@@ -107,7 +108,7 @@ function Login() {
             type="submit"
             className="w-full rounded-xl bg-cyan-400 py-3 text-sm font-semibold text-slate-900 hover:bg-cyan-300 transition-all duration-300 shadow-lg shadow-cyan-500/20"
           >
-            {loading ? "Please Wait...." : "Login"}
+            {loading ? <ButtonLoading/> : "Login"}
           </button>
           {loginError && (
             <p className="text-red-400 text-sm text-center mb-4 bg-red-500/10 border border-red-500/30 p-2 rounded-md">

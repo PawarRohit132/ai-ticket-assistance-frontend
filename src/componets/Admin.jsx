@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Button from "../componets/Button.jsx";
-import {udateUserDetails, getAllUsers} from "../store/Slice/authSlice.js"
-import {useDispatch, useSelector} from "react-redux"
+import { udateUserDetails, getAllUsers } from "../store/Slice/authSlice.js";
+import { useDispatch, useSelector } from "react-redux";
 
 function Admin({ users }) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const allUserData = useSelector((state) => state.auth.allUserData?.length);
+
   const [editingUser, setEditingUser] = useState(null);
   const [formData, setFormData] = useState({ role: "", skills: "" });
-  
 
   const handleEditClick = (user) => {
     setEditingUser(user.email);
@@ -18,21 +19,18 @@ function Admin({ users }) {
   };
 
   const handleUpdate = () => {
-    
     const updatedUser = {
-      email : editingUser,
-      role : formData.role,
-      skills : formData.skills.split(",").map((skill) => skill.trim()).filter(Boolean)
-    }
+      email: editingUser,
+      role: formData.role,
+      skills: formData.skills
+        .split(",")
+        .map((skill) => skill.trim())
+        .filter(Boolean),
+    };
     dispatch(udateUserDetails(updatedUser));
-    dispatch(getAllUsers())
-    setEditingUser(null)
-    
-    
-    
-  }
-
-
+    dispatch(getAllUsers());
+    setEditingUser(null);
+  };
 
   return (
     <div className="min-h-screen bg-black text-white px-4 py-10">
@@ -42,14 +40,15 @@ function Admin({ users }) {
           <h1 className="text-4xl font-bold">
             Admin <span className="text-cyan-400">Panel</span>
           </h1>
-          <p className="text-slate-400 mt-2">Manage all registered users</p>
+          <p className="text-slate-400 mt-2">
+            Manage all registered {allUserData} users
+          </p>
           <div className="mt-4 h-px bg-gradient-to-r from-cyan-400/50 to-transparent"></div>
         </div>
 
         {/* Users Grid */}
-        
+
         {users && users.length > 0 ? (
-          
           <div className="grid gap-4">
             {users.map((user, index) => (
               <div
@@ -80,9 +79,24 @@ function Admin({ users }) {
                               setFormData({ ...formData, role: e.target.value })
                             }
                           >
-                            <option value="user" className="bg-white/5 text-white">User</option>
-                            <option value="moderator" className="bg-white/5 text-white">Moderator</option>
-                            <option value="admin" className="bg-white/5 text-white">Admin</option>
+                            <option
+                              value="user"
+                              className="bg-white/5 text-white"
+                            >
+                              User
+                            </option>
+                            <option
+                              value="moderator"
+                              className="bg-white/5 text-white"
+                            >
+                              Moderator
+                            </option>
+                            <option
+                              value="admin"
+                              className="bg-white/5 text-white"
+                            >
+                              Admin
+                            </option>
                           </select>
 
                           <input
@@ -90,7 +104,12 @@ function Admin({ users }) {
                             placeholder="Comma-separated skills"
                             className="input input-bordered w-full bg-white/5"
                             value={formData.skills}
-                            onChange={(e) => setFormData({ ...formData, skills: e.target.value })}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                skills: e.target.value,
+                              })
+                            }
                           />
 
                           <div className="flex gap-2">
@@ -109,9 +128,10 @@ function Admin({ users }) {
                           </div>
                         </div>
                       ) : (
-                        <Button 
-                        onClick={() => handleEditClick(user)}
-                        className="px-4 py-2 rounded-md bg-green-700 hover:bg-red-600 transition duration-100">
+                        <Button
+                          onClick={() => handleEditClick(user)}
+                          className="px-4 py-2 rounded-md bg-green-700 hover:bg-red-600 transition duration-100"
+                        >
                           Edit
                         </Button>
                       )}

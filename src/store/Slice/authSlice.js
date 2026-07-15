@@ -13,6 +13,7 @@ const initialState = {
   getCurrentUserError: null,
   getAllUsersError: null,
   updateUserDetailsError: null,
+  changeCurrentPasswordError: null,
   refreshAccessTokenError: null,
 };
 
@@ -23,7 +24,6 @@ export const createAccount = createAsyncThunk(
       const response = await axiosInstance.post("/v1/users/signup", data, {
         withCredentials: true,
       });
-      console.log(response);
 
       toast.success(response.data.message);
       return response.data.data;
@@ -124,7 +124,26 @@ export const refreshAccessToken = createAsyncThunk(
   async (data) => {
     try {
       const response = await axiosInstance.post(
-        "/api/v1/users/refreshAccessToken",
+        "/v1/users/refreshAccessToken",
+        data,
+        { withCredentials: true },
+      );
+      toast.success(response.data.message);
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "something went wrong",
+      );
+    }
+  },
+);
+
+export const changeCurrentPassword = createAsyncThunk(
+  "changeCorrentPassword",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post(
+        "/v1/users/change-password",
         data,
         { withCredentials: true },
       );
@@ -145,6 +164,9 @@ const authSlice = createSlice({
     clearLoginError: (state) => {
       state.loginError = null;
     },
+    changeCurrentPasswordError : (state) => {
+      state.changeCurrentPasswordError = null;
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(createAccount.pending, (state) => {
@@ -239,8 +261,21 @@ const authSlice = createSlice({
         (state.status = false),
         (state.logoutError = action.payload));
     });
+    builder.addCase(changeCurrentPassword.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(changeCurrentPassword.fulfilled, (state, action) => {
+      ((state.loading = false),
+        (state.status = true),
+        (state.userData = action.payload));
+    });
+    builder.addCase(changeCurrentPassword.rejected, (state, action) => {
+      ((state.loading = false),
+        (state.status = false),
+        (state.changeCurrentPasswordError = action.payload));
+    });
   },
 });
 
 export default authSlice.reducer;
-export const { clearLoginError } = authSlice.actions;
+export const { clearLoginError, changeCurrentPasswordError } = authSlice.actions;

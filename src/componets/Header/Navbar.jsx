@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogout } from "../../store/Slice/authSlice.js";
 import Button from "../Button.jsx";
+import Dropdown from "../Dropdown.jsx";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -19,7 +20,6 @@ const Navbar = () => {
 
   return (
     <div className="navbar bg-slate-800 text-white px-6 py-4 shadow-lg flex items-center justify-between relative">
-
       {/* Logo */}
       <div className="flex items-center">
         <Link to="/" className="text-3xl font-bold tracking-wide">
@@ -33,9 +33,15 @@ const Navbar = () => {
           className="md:hidden flex flex-col gap-1.5 p-2"
           onClick={() => setMenuOpen(!menuOpen)}
         >
-          <span className={`w-6 h-0.5 bg-white transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-2" : ""}`}></span>
-          <span className={`w-6 h-0.5 bg-white transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`}></span>
-          <span className={`w-6 h-0.5 bg-white transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`}></span>
+          <span
+            className={`w-6 h-0.5 bg-white transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-2" : ""}`}
+          ></span>
+          <span
+            className={`w-6 h-0.5 bg-white transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`}
+          ></span>
+          <span
+            className={`w-6 h-0.5 bg-white transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`}
+          ></span>
         </button>
       )}
 
@@ -65,29 +71,45 @@ const Navbar = () => {
               </div>
               <div className="flex flex-col">
                 <span className="text-xs text-gray-400">Signed in as</span>
-                <span className="text-sm font-medium max-w-[180px] truncate">{userData?.email}</span>
+                <span className="text-sm font-medium max-w-[180px] truncate">
+                  {userData?.email}
+                </span>
               </div>
               <div className="flex items-center flex-col">
                 <span className="text-xs text-gray-400">Role 🤖</span>
-                <span className="text-sm font-medium max-w-[180px] truncate">{userData?.role}</span>
+                <span className="text-sm font-medium max-w-[180px] truncate">
+                  {userData?.role}
+                </span>
               </div>
             </div>
 
-            {userData?.role === "admin" && (
+            {/* {userData?.role === "admin" && (
               <Link
                 to="/admin"
                 className="px-4 py-2 rounded-xl bg-purple-500 hover:bg-purple-600 transition duration-300"
               >
                 Admin Panel
               </Link>
-            )}
+            )} */}
+            {/* {
+              authStatus && (
+                 <Link
+              to={"/update-information"}
+              className="px-5 py-2 rounded-xl bg-red-500 hover:bg-red-600 border-none text-white transition duration-300"
+            >
+              Setting
+            </Link>
+              )
+            } */}
 
-            <Button
+            <Dropdown />
+
+            {/* <Button
               onClick={logout}
               className="px-5 py-2 rounded-xl bg-red-500 hover:bg-red-600 border-none text-white transition duration-300"
             >
               Logout
-            </Button>
+            </Button> */}
           </>
         )}
       </div>
@@ -121,7 +143,9 @@ const Navbar = () => {
                 </div>
                 <div className="flex flex-col">
                   <span className="text-xs text-gray-400">Signed in as</span>
-                  <span className="text-sm font-medium truncate">{userData?.email}</span>
+                  <span className="text-sm font-medium truncate">
+                    {userData?.email}
+                  </span>
                 </div>
                 <div className="flex flex-col">
                   <span className="text-xs text-gray-400">Role 🤖</span>
@@ -138,9 +162,30 @@ const Navbar = () => {
                   Admin Panel
                 </Link>
               )}
+              {authStatus && (
+                <Link
+                  to="/home"
+                  onClick={() => setMenuOpen(false)}
+                  className="px-4 py-2 rounded-xl bg-purple-500 hover:bg-purple-600 text-center transition duration-300"
+                >
+                  🏠 Home
+                </Link>
+              )}
+              {authStatus && (
+                <Link
+                  to="/update-information"
+                  className="px-4 py-2 rounded-xl bg-purple-500 hover:bg-purple-600 text-center transition duration-300"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  ⚙️ Settings
+                </Link>
+              )}
 
               <Button
-                onClick={() => { logout(); setMenuOpen(false); }}
+                onClick={() => {
+                  logout();
+                  setMenuOpen(false);
+                }}
                 className="px-5 py-2 rounded-xl bg-red-500 hover:bg-red-600 border-none text-white transition duration-300 w-full"
               >
                 Logout

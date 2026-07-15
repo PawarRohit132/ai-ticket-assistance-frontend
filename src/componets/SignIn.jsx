@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { createAccount, userLogin } from "../store/Slice/authSlice.js";
+import ButtonLoading from "../componets/ButtonLoading.jsx"
 
 function SignIn() {
   const navigate = useNavigate();
@@ -23,7 +24,6 @@ function SignIn() {
 
   const submit = async (data) => {
     const response = await dispatch(createAccount(data));
-    console.log(response);
 
     if (response.type === "register/fulfilled") {
       const email = data?.email;
@@ -191,7 +191,7 @@ function SignIn() {
             type="submit"
             className="w-full rounded-xl bg-cyan-400 py-3 text-sm font-bold text-slate-900 hover:bg-cyan-300 transition-all duration-300 shadow-lg shadow-cyan-500/20"
           >
-            Sign In
+            {loading ? <ButtonLoading/> : "Sign In"}
           </button>
           {signupError && (
             <p className="text-red-400 text-sm text-center mb-4 bg-red-500/10 border border-red-500/30 p-2 rounded-md">
