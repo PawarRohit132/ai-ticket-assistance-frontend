@@ -227,7 +227,9 @@ const authSlice = createSlice({
     builder.addCase(udateUserDetails.fulfilled, (state, action) => {
       state.loading = false;
       state.status = true;
-      state.userData = action.payload;
+      state.allUserData = state.allUserData.map((user) => {
+        user.email === action.payload.email ? action.payload : user
+      })
     });
     builder.addCase(udateUserDetails.rejected, (state, action) => {
       state.loading = false;

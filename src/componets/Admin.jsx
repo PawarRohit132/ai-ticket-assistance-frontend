@@ -54,25 +54,25 @@ function Admin({ users }) {
           <div className="grid gap-4">
             {users.map((user, index) => (
               <div
-                key={user._id}
+                key={user?._id}
                 className="group bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:border-cyan-400/40 hover:bg-white/8 transition-all duration-300 shadow-xl"
               >
                 <div className="flex flex-col items-start justify-between gap-4 flex-wrap">
                   <div className="flex items-center gap-4">
                     <div>
                       <p className="text-white font-semibold text-lg group-hover:text-cyan-400 transition-colors duration-300">
-                        Email : {user.email}
+                        Email : {user?.email}
                       </p>
                       <p className="text-white font-semibold text-lg group-hover:text-cyan-400 transition-colors duration-300">
-                        Current Role : {user.role}
+                        Current Role : {user?.role}
                       </p>
                       <p className="text-white font-semibold text-lg group-hover:text-cyan-400 transition-colors duration-300">
                         <strong>Skills : </strong>{" "}
-                        {user.skills && user.skills.length > 0
-                          ? user.skills.join(", ")
+                        {user?.skills && user?.skills.length > 0
+                          ? user?.skills.join(", ")
                           : "N/A"}
                       </p>
-                      {editingUser === user.email ? (
+                      {editingUser === user?.email ? (
                         <div className="mt-4 space-y-2">
                           <select
                             className="select select-bordered w-full bg-white/5"

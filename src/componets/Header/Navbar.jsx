@@ -13,18 +13,17 @@ const Navbar = () => {
   const authStatus = useSelector((state) => state.auth.status);
   const userData = useSelector((state) => state.auth.userData);
   
-  const getUser = async () => {
-    await dispatch(getCurrentUser());
-  }
+  
+  
 
   const logout = async () => {
     await dispatch(userLogout());
     navigate("/login");
   };
+
+ 
   
-  useEffect(() => {
-  dispatch(getCurrentUser());
-}, [dispatch]);
+
 
 
   
