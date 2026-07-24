@@ -7,7 +7,6 @@ import Home from "./pages/Home.jsx";
 import { Routes, Route } from "react-router-dom";
 import { getCurrentUser } from "./store/Slice/authSlice.js";
 import { useDispatch } from "react-redux";
-import Navbar from "./componets/Header/Navbar.jsx";
 import Layout from "./Layout.jsx";
 import AIHeroSection from "./componets/AIHeroSection.jsx";
 import AdminPage from "./pages/AdminPage.jsx";

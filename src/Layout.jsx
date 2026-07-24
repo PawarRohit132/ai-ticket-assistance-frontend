@@ -1,12 +1,14 @@
-import React from "react";
-import Navbar from "./componets/Header/Navbar.jsx";
+import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
+import Navbar from "./componets/Header/Navbar.jsx";
 import Footer from "./componets/Footer.jsx";
 
 function Layout() {
+  
+
   return (
     <>
-      <Navbar />
+      <Navbar/>
       <div className="sm:flex-1">
         <Outlet />
       </div>

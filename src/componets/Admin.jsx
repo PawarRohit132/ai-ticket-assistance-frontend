@@ -18,7 +18,7 @@ function Admin({ users }) {
     });
   };
 
-  const handleUpdate = () => {
+  const handleUpdate = async () => {
     const updatedUser = {
       email: editingUser,
       role: formData.role,
@@ -27,10 +27,12 @@ function Admin({ users }) {
         .map((skill) => skill.trim())
         .filter(Boolean),
     };
-    dispatch(udateUserDetails(updatedUser));
-    dispatch(getAllUsers());
+    await dispatch(udateUserDetails(updatedUser));
+    await dispatch(getAllUsers());
     setEditingUser(null);
   };
+
+ 
 
   return (
     <div className="min-h-screen bg-black text-white px-4 py-10">

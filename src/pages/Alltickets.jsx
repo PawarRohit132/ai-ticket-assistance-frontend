@@ -8,6 +8,8 @@ import Loading from "../componets/Loading.jsx"
 function Alltickets() {
     const dispatch = useDispatch();
     const tickets = useSelector((state)=> state.ticket?.tickets || []);
+
+    
     
     const pendingTickets = tickets?.filter((ticket) => ticket?.status !== "SOLVED")
     

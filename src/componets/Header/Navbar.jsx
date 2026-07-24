@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { userLogout } from "../../store/Slice/authSlice.js";
+import { userLogout, getCurrentUser } from "../../store/Slice/authSlice.js";
 import Button from "../Button.jsx";
 import Dropdown from "../Dropdown.jsx";
 
@@ -12,12 +12,22 @@ const Navbar = () => {
 
   const authStatus = useSelector((state) => state.auth.status);
   const userData = useSelector((state) => state.auth.userData);
+  
+  const getUser = async () => {
+    await dispatch(getCurrentUser());
+  }
 
   const logout = async () => {
     await dispatch(userLogout());
     navigate("/login");
   };
+  
+  useEffect(() => {
+  dispatch(getCurrentUser());
+}, [dispatch]);
 
+
+  
   return (
     <div className="navbar bg-slate-800 text-white px-6 py-4 shadow-lg flex items-center justify-between relative">
       {/* Logo */}

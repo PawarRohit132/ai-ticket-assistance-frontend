@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { createAccount, userLogin } from "../store/Slice/authSlice.js";
+import { createAccount, userLogin, getCurrentUser } from "../store/Slice/authSlice.js";
 import ButtonLoading from "../componets/ButtonLoading.jsx"
 
 function SignIn() {
@@ -31,6 +31,7 @@ function SignIn() {
 
       const loginResult = await dispatch(userLogin({ email, password }));
       if (loginResult?.type === "login/fulfilled") {
+        await dispatch(getCurrentUser());
         navigate("/home");
       } else {
         navigate("/signin");

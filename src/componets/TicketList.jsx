@@ -1,7 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function TicketList({ tickets }) {
+ const userType = useSelector((state) => state.auth.userData);
+
+ 
   return (
     <div className="max-w-5xl mx-auto px-4 py-10">
       {/* Heading */}
