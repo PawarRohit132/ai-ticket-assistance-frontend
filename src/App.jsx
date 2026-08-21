@@ -12,6 +12,7 @@ import AIHeroSection from "./componets/AIHeroSection.jsx";
 import AdminPage from "./pages/AdminPage.jsx";
 import ListSolvedTickets from "./componets/ListSolvedTickets.jsx";
 import UpdateInformationPage from "./pages/UpdateInformationPage.jsx";
+import VerifyOTP from "./componets/VerifyOTP.jsx"
 
 function App() {
   const dispatch = useDispatch();
@@ -46,6 +47,7 @@ function App() {
               </AuthLayout>
             }
           />
+          
           <Route
             path="/home"
             element={
@@ -95,6 +97,12 @@ function App() {
             }
           ></Route>
         </Route>
+        <Route
+            path="/verifyEmail"
+            element={
+              <VerifyOTP/>
+            }
+          />
       </Routes>
     </>
   );

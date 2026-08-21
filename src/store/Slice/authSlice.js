@@ -15,6 +15,8 @@ const initialState = {
   updateUserDetailsError: null,
   changeCurrentPasswordError: null,
   refreshAccessTokenError: null,
+  deletUserError: null,
+  verifyEmailError : null
 };
 
 export const createAccount = createAsyncThunk(
@@ -157,6 +159,39 @@ export const changeCurrentPassword = createAsyncThunk(
   },
 );
 
+export const deleteUser = createAsyncThunk(
+  "deleteUser",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.delete(
+        `/v1/users/delete-user/${id}`,
+        { withCredentials: true },
+      );
+      toast.success(response.data.data);
+
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "something went wrong",
+      );
+    }
+  },
+);
+
+export const verifyEmail = createAsyncThunk(
+  "verifyEmail",
+  async ({userId, otp},{ rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post("v1/users/verify-email",{userId, otp})
+      return response.data
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Email verification failed"
+      );
+    }
+  },
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -164,9 +199,9 @@ const authSlice = createSlice({
     clearLoginError: (state) => {
       state.loginError = null;
     },
-    changeCurrentPasswordError : (state) => {
+    changeCurrentPasswordError: (state) => {
       state.changeCurrentPasswordError = null;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(createAccount.pending, (state) => {
@@ -228,8 +263,8 @@ const authSlice = createSlice({
       state.loading = false;
       state.status = true;
       state.allUserData = state.allUserData.map((user) => {
-        user.email === action.payload.email ? action.payload : user
-      })
+        return user.email === action.payload.email ? action.payload : user;
+      });
     });
     builder.addCase(udateUserDetails.rejected, (state, action) => {
       state.loading = false;
@@ -276,8 +311,35 @@ const authSlice = createSlice({
         (state.status = false),
         (state.changeCurrentPasswordError = action.payload));
     });
+    builder.addCase(deleteUser.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(deleteUser.fulfilled, (state, action) => {
+      state.loading = false;
+      state.status = true;
+      state.allUserData = action.payload;
+    });
+    builder.addCase(deleteUser.rejected, (state, action) => {
+      state.loading = false;
+      state.status = false;
+      state.deletUserError = action.payload;
+    });
+    builder.addCase(verifyEmail.pending, (state) => {
+      state.loading =false
+    });
+    builder.addCase(verifyEmail.fulfilled, (state, action) => {
+      state.loading =false;
+      state.status = true;
+      state.userData = action.payload
+    });
+    builder.addCase(verifyEmail.rejected, (state, action) => {
+      state.loading =false;
+      state.status = false;
+      state.verifyEmailError = action.payload
+    });
   },
 });
 
 export default authSlice.reducer;
-export const { clearLoginError, changeCurrentPasswordError } = authSlice.actions;
+export const { clearLoginError, changeCurrentPasswordError } =
+  authSlice.actions;

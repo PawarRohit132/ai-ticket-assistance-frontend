@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Button from "../componets/Button.jsx";
-import { udateUserDetails, getAllUsers } from "../store/Slice/authSlice.js";
+import DeleteConfirmation from "./DeleteConfirmation.jsx";
+import {
+  udateUserDetails,
+  getAllUsers,
+  deleteUser,
+} from "../store/Slice/authSlice.js";
 import { useDispatch, useSelector } from "react-redux";
+import { HiOutlineDotsVertical } from "react-icons/hi";
 
 function Admin({ users }) {
   const dispatch = useDispatch();
@@ -9,6 +15,11 @@ function Admin({ users }) {
 
   const [editingUser, setEditingUser] = useState(null);
   const [formData, setFormData] = useState({ role: "", skills: "" });
+  const [openMenu, setOpenMenu] = useState(null);
+  const [deleteState, setDeleteState] = useState({
+    delete: false,
+    userId: null,
+  });
 
   const handleEditClick = (user) => {
     setEditingUser(user.email);
@@ -32,7 +43,16 @@ function Admin({ users }) {
     setEditingUser(null);
   };
 
- 
+  const handleDeleteUser = async (userId) => {
+    await dispatch(deleteUser(userId));
+
+    await dispatch(getAllUsers());
+    setOpenMenu(null);
+    setDeleteState({
+      delete: false,
+      userId: null,
+    });
+  };
 
   return (
     <div className="min-h-screen bg-black text-white px-4 py-10">
@@ -83,19 +103,19 @@ function Admin({ users }) {
                           >
                             <option
                               value="user"
-                              className="bg-white/5 text-white"
+                              className="bg-white/5 text-black"
                             >
                               User
                             </option>
                             <option
                               value="moderator"
-                              className="bg-white/5 text-white"
+                              className="bg-white/5 text-black"
                             >
                               Moderator
                             </option>
                             <option
                               value="admin"
-                              className="bg-white/5 text-white"
+                              className="bg-white/5 text-black"
                             >
                               Admin
                             </option>
@@ -137,11 +157,61 @@ function Admin({ users }) {
                           Edit
                         </Button>
                       )}
+
+                      <div className="absolute right-3 top-3  ">
+                        <div
+                          className="absolute top-2 right-1 -translate-x-1/2
+                   bg-gray-600 text-white text-xs px-2 py-1 rounded hover:cursor-pointer
+                   "
+                        >
+                          <HiOutlineDotsVertical
+                            size={15}
+                            onClick={() =>
+                              setOpenMenu(
+                                openMenu === user._id ? null : user._id,
+                              )
+                            }
+                          />
+                          {openMenu === user._id && (
+                            <div className="absolute right-0 top-10 w-40 overflow-hidden rounded-xl border border-white/10 bg-gray-900/95 shadow-2xl shadow-black/50 backdrop-blur-xl z-50">
+                              <ul className="p-1.5">
+                                <li>
+                                  <Button
+                                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-red-400 transition-all duration-200 hover:bg-red-500/10 hover:text-red-700 active:scale-95"
+                                    onClick={() =>
+                                      setDeleteState((prevState) => ({
+                                        ...prevState,
+                                        delete: true,
+                                        userId: user?._id,
+                                      }))
+                                    }
+                                  >
+                                    🗑️
+                                    <span>Delete User</span>
+                                  </Button>
+                                </li>
+                              </ul>
+                            </div>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             ))}
+            {deleteState.delete && (
+              <DeleteConfirmation
+                onCancel={() =>
+                  setDeleteState((prevState) => ({
+                    ...prevState,
+                    delete: false,
+                    userId: null,
+                  }))
+                }
+                onDelete={() => handleDeleteUser(deleteState.userId)}
+              />
+            )}
           </div>
         ) : (
           /* Empty State */

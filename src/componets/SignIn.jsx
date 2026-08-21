@@ -6,8 +6,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { createAccount, userLogin, getCurrentUser } from "../store/Slice/authSlice.js";
-import ButtonLoading from "../componets/ButtonLoading.jsx"
+import {
+  createAccount,
+  userLogin,
+  getCurrentUser,
+} from "../store/Slice/authSlice.js";
+import ButtonLoading from "../componets/ButtonLoading.jsx";
 
 function SignIn() {
   const navigate = useNavigate();
@@ -26,18 +30,16 @@ function SignIn() {
     const response = await dispatch(createAccount(data));
 
     if (response.type === "register/fulfilled") {
-      const email = data?.email;
-      const password = data?.password;
-
-      const loginResult = await dispatch(userLogin({ email, password }));
-      if (loginResult?.type === "login/fulfilled") {
-        await dispatch(getCurrentUser());
-        navigate("/home");
-      } else {
-        navigate("/signin");
-      }
+      navigate("/verifyEmail", {
+        state: {
+          userId: response.payload._id,
+          email: data.email,
+          password: data.password,
+        },
+      });
     }
   };
+
   if (loading) {
     return <Loading />;
   }
@@ -192,7 +194,7 @@ function SignIn() {
             type="submit"
             className="w-full rounded-xl bg-cyan-400 py-3 text-sm font-bold text-slate-900 hover:bg-cyan-300 transition-all duration-300 shadow-lg shadow-cyan-500/20"
           >
-            {loading ? <ButtonLoading/> : "Sign In"}
+            {loading ? <ButtonLoading /> : "Create Account"}
           </button>
           {signupError && (
             <p className="text-red-400 text-sm text-center mb-4 bg-red-500/10 border border-red-500/30 p-2 rounded-md">

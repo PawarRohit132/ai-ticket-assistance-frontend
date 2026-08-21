@@ -9,6 +9,7 @@ const AdminPage = () => {
     const allUsers = useSelector((state) => state.auth.allUserData);
     const loading = useSelector((state) => state.auth.loading);
     const error = useSelector((state) => state.auth.getAllUsersError);
+    
 
     
 
