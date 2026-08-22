@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { userLogout, getCurrentUser } from "../../store/Slice/authSlice.js";
 import Button from "../Button.jsx";
 import Dropdown from "../Dropdown.jsx";
+import Search from "../Search.jsx";
+
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -75,6 +77,9 @@ const Navbar = () => {
           <>
             {/* User Info */}
             <div className="flex items-center gap-3 bg-slate-800 px-4 py-2 rounded-xl">
+              <div>
+                <Search/>
+              </div>
               <div className="w-10 h-10 rounded-full bg-cyan-400 text-slate-900 flex items-center justify-center font-bold uppercase">
                 {userData?.email?.charAt(0)}
               </div>
@@ -146,6 +151,9 @@ const Navbar = () => {
           ) : (
             <>
               {/* User Info */}
+              <div>
+                <Search/>
+              </div>
               <div className="flex items-center gap-3 bg-slate-700 px-4 py-3 rounded-xl">
                 <div className="w-10 h-10 rounded-full bg-cyan-400 text-slate-900 flex items-center justify-center font-bold uppercase">
                   {userData?.email?.charAt(0)}

@@ -5,6 +5,7 @@ import { createTicket, getTicketById } from "../store/Slice/ticketSlice.js";
 import Input from "./Inpute.jsx";
 import Button from "./Button.jsx";
 
+
 function CreateTicket() {
   const { handleSubmit, register, setValue } = useForm();
   const dispatch = useDispatch();
@@ -24,7 +25,10 @@ function CreateTicket() {
     >
       {/* Heading */}
       <div>
-        <h2 className="text-3xl font-bold text-white">Create New Ticket</h2>
+        
+          <h2 className="text-3xl font-bold text-white">Create New Ticket</h2>
+          
+        
 
         <p className="text-slate-400 mt-2 text-sm">
           Describe your issue and let AI prioritize it instantly.

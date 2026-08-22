@@ -6,11 +6,13 @@ const initialState = {
   loading: false,
   status: false,
   tickets: [],
+  searchTickets:[],
   selectedTicket: null,
   createTicketError: null,
   getTicketByIdError: null,
   getTicketsError: null,
-  ticketSolvedError : null
+  ticketSolvedError: null,
+  searchTicketError : null
 };
 
 export const createTicket = createAsyncThunk(
@@ -71,14 +73,44 @@ export const ticketSolved = createAsyncThunk(
   "ticketSolved",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.put(`/v1/tickets/ticketSolved/${id}`, {
-        withCredentials: true,
-      });
+      const response = await axiosInstance.put(
+        `/v1/tickets/ticketSolved/${id}`,
+        {
+          withCredentials: true,
+        },
+      );
       toast.success(response.data.message);
-      
+
       return response.data;
     } catch (error) {
       error.response?.data?.message || "something went wrong";
+    }
+  },
+);
+
+export const searchTicket = createAsyncThunk(
+  "searchTicket",
+  async (search, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get(
+        "/v1/tickets/ticketSearch",
+        {
+          params : {
+            search : search
+          }
+        },
+        { withCredentials: true },
+      );
+     
+      
+      console.log(response);
+      
+      toast.success(response.data.message)
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "something went wrong",
+      );
     }
   },
 );
@@ -135,10 +167,25 @@ const ticketSlice = createSlice({
       state.status = true;
       state.tickets = action.payload.tickets;
     });
-    builder.addCase(ticketSolved.rejected, (state,action) => {
+    builder.addCase(ticketSolved.rejected, (state, action) => {
       state.loading = false;
       state.status = false;
       state.ticketSolvedError = action.payload;
+    });
+    builder.addCase(searchTicket.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(searchTicket.fulfilled, (state, action) => {
+      state.loading = false;
+      state.status = true;
+      state.searchTickets = action.payload;
+      
+      
+    });
+    builder.addCase(searchTicket.rejected, (state, action) => {
+      state.loading = false;
+      state.status = false;
+      state.searchTicketError = action.payload;
     });
   },
 });
