@@ -1,5 +1,5 @@
-<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/d2ea0f8d-7a7d-4be7-aab2-d66f8ab7fa31" /><img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/7e2def5b-53fc-4042-8fac-e3a0cbb6a5c6" />Smarter Tickets, Faster Support Ticket AI is a next-generation platform that automates ticket management, intelligently prioritizes issues, and empowers your team to deliver exceptional support with maximum efficiency.
-<img width="1323" height="523" alt="Screenshot (162)" src="https://github.com/user-attachments/assets/9a1a0597-6618-4cc7-81e6-be02a3e8efbd" />
+Smarter Tickets, Faster Support
+Ticket AI is a next-generation platform that automates ticket management, intelligently prioritizes issues, and empowers your team to deliver exceptional support with maximum efficiency.
 -------------------------------------------------------------------------------
 Login & Create Account and email verify by OTP.
 <img width="1366" height="594" alt="Screenshot (172)" src="https://github.com/user-attachments/assets/ebd19216-3d01-48c7-bb27-7ef480bb451a" />
