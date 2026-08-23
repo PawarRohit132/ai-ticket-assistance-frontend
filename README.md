@@ -19,7 +19,7 @@ When you select your ticket you see ticket status, assigned to moderator or admi
 -------------------------------------------------------------------------------
 After ticket assigned the moderator or admin can see your ticket with more information like status, priorty, helpfull notes, Related Skills.
 When moderator and admin click the ticket solved button your ticket is solved & ticket status is solved.
-<img width="1366" height="768" alt="Screenshot (176)" src="https://github.com/user-attachments/assets/fef0e22c-68cb-46de-aacc-ac9bb36cad77" />
+<img width="1366" height="597" alt="Screenshot (176)" src="https://github.com/user-attachments/assets/688836ad-adde-42a1-b3ad-a070fc680fdc" />
 
 -------------------------------------------------------------------------------
 We have admin panel also.
