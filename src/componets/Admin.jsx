@@ -5,6 +5,7 @@ import {
   udateUserDetails,
   getAllUsers,
   deleteUser,
+  clearUpdateUserDetailsError
 } from "../store/Slice/authSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import { HiOutlineDotsVertical } from "react-icons/hi";
@@ -20,6 +21,10 @@ function Admin({ users }) {
     delete: false,
     userId: null,
   });
+
+  useEffect(() => {
+    dispatch(clearUpdateUserDetailsError());
+  },[])
 
   const handleEditClick = (user) => {
     setEditingUser(user.email);

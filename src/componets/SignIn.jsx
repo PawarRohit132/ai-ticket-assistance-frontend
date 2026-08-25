@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Input from "../componets/Inpute.jsx";
 import Button from "../componets/Button.jsx";
 import Loading from "./Loading.jsx";
@@ -6,11 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import {
-  createAccount,
-  userLogin,
-  getCurrentUser,
-} from "../store/Slice/authSlice.js";
+import { createAccount, clearSignpError } from "../store/Slice/authSlice.js";
 import ButtonLoading from "../componets/ButtonLoading.jsx";
 
 function SignIn() {
@@ -26,6 +22,10 @@ function SignIn() {
   const loading = useSelector((state) => state.auth?.loading);
   const signupError = useSelector((state) => state.auth.signupError);
 
+  useEffect(() => {
+    dispatch(clearSignpError());
+  },[])
+
   const submit = async (data) => {
     const response = await dispatch(createAccount(data));
 
@@ -35,6 +35,7 @@ function SignIn() {
           userId: response.payload._id,
           email: data.email,
           password: data.password,
+          type : "signin"
         },
       });
     }
@@ -192,7 +193,7 @@ function SignIn() {
           {/* Button */}
           <button
             type="submit"
-            className="w-full rounded-xl bg-cyan-400 py-3 text-sm font-bold text-slate-900 hover:bg-cyan-300 transition-all duration-300 shadow-lg shadow-cyan-500/20"
+            className="w-full rounded-xl bg-cyan-500 py-3 text-sm font-semibold text-slate-900 hover:bg-cyan-300 transition-all duration-300 shadow-lg shadow-cyan-500/20"
           >
             {loading ? <ButtonLoading /> : "Create Account"}
           </button>
@@ -208,7 +209,7 @@ function SignIn() {
           Already have an account?{" "}
           <Link
             to="/login"
-            className="font-semibold text-cyan-400 hover:text-cyan-300 transition-all duration-300"
+            className="font-semibold text-blue-600 hover:text-cyan-300 transition-all duration-300"
           >
             Login
           </Link>

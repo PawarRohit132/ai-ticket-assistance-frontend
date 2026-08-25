@@ -106,7 +106,7 @@ function Login() {
           {/* Button */}
           <button
             type="submit"
-            className="w-full rounded-xl bg-cyan-400 py-3 text-sm font-semibold text-slate-900 hover:bg-cyan-300 transition-all duration-300 shadow-lg shadow-cyan-500/20"
+            className="w-full rounded-xl bg-cyan-500 py-3 text-sm font-semibold text-slate-900 hover:bg-cyan-300 transition-all duration-300 shadow-lg shadow-cyan-500/20"
           >
             {loading ? <ButtonLoading/> : "Login"}
           </button>
@@ -122,9 +122,18 @@ function Login() {
           Don’t have an account?{" "}
           <Link
             to="/signin"
-            className="font-semibold text-cyan-400 hover:text-cyan-300 transition"
+            className="font-semibold text-blue-600 hover:text-cyan-300 transition"
           >
             Signup
+          </Link>
+        </p>
+        <p className="mt-3 text-center text-sm text-slate-400">
+          If you forget your password?{" "}
+          <Link
+            to="/forgetPassword"
+            className="font-semibold text-blue-600 hover:text-cyan-300 transition"
+          >
+            Forgotten Password
           </Link>
         </p>
       </div>

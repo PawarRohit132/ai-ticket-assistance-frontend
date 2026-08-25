@@ -80,7 +80,8 @@ export const ticketSolved = createAsyncThunk(
         },
       );
       toast.success(response.data.message);
-
+      
+      
       return response.data;
     } catch (error) {
       error.response?.data?.message || "something went wrong";
@@ -103,7 +104,7 @@ export const searchTicket = createAsyncThunk(
       );
      
       
-      console.log(response);
+      
       
       toast.success(response.data.message)
       return response.data.data;
@@ -166,6 +167,8 @@ const ticketSlice = createSlice({
       state.loading = false;
       state.status = true;
       state.tickets = action.payload.tickets;
+      console.log(action.payload);
+      
     });
     builder.addCase(ticketSolved.rejected, (state, action) => {
       state.loading = false;

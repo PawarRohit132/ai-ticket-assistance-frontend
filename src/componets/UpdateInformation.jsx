@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import Input from "../componets/Inpute.jsx";
-import Button from "../componets/Button.jsx";
-import { changeCurrentPassword, getCurrentUser } from "../store/Slice/authSlice";
+import { changeCurrentPassword, clearChangeCurrentPasswordError } from "../store/Slice/authSlice";
 import ButtonLoading from "../componets/ButtonLoading.jsx"
 import { useNavigate } from "react-router-dom";
 
@@ -21,6 +19,10 @@ function UpdateInformation() {
     (state) => state.auth.changeCurrentPasswordError,
   );
   const loading = useSelector((state) => state.auth.loading);
+
+  useEffect(() => {
+    dispatch (clearChangeCurrentPasswordError());
+  },[]);
 
 
   const onSubmit = async (data) =>{

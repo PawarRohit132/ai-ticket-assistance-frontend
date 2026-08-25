@@ -13,6 +13,8 @@ import AdminPage from "./pages/AdminPage.jsx";
 import ListSolvedTickets from "./componets/ListSolvedTickets.jsx";
 import UpdateInformationPage from "./pages/UpdateInformationPage.jsx";
 import VerifyOTP from "./componets/VerifyOTP.jsx"
+import ForgottenPassword from "./componets/ForgottenPassword.jsx"
+import SetForgetPassword from "./componets/SetForgetPassword.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -102,7 +104,21 @@ function App() {
             element={
               <VerifyOTP/>
             }
-          />
+        />
+        <Route
+          path="/forgetPassword"
+          element = {
+            <ForgottenPassword/>
+          }
+        />
+        <Route
+          path="/setForgetPassword"
+          element = {
+            <SetForgetPassword/>
+          }
+        />
+        
+
       </Routes>
     </>
   );

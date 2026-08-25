@@ -16,7 +16,11 @@ const initialState = {
   changeCurrentPasswordError: null,
   refreshAccessTokenError: null,
   deletUserError: null,
-  verifyEmailError : null
+  verifyEmailError: null,
+  forgottenPasswordError: null,
+  verifyForgottenPasswordError: null,
+  setForgottenPasswordError: null,
+  resendOtpError: null,
 };
 
 export const createAccount = createAsyncThunk(
@@ -180,13 +184,91 @@ export const deleteUser = createAsyncThunk(
 
 export const verifyEmail = createAsyncThunk(
   "verifyEmail",
-  async ({userId, otp},{ rejectWithValue }) => {
+  async ({ userId, otp }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post("v1/users/verify-email",{userId, otp})
-      return response.data
+      const response = await axiosInstance.post("v1/users/verify-email", {
+        userId,
+        otp,
+      });
+      return response.data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Email verification failed"
+        error.response?.data?.message || "Email verification failed",
+      );
+    }
+  },
+);
+
+export const forgottenPassword = createAsyncThunk(
+  "forgottenPassword",
+  async (email, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post(
+        "v1/users/forgotten-password",
+        email,
+      );
+
+      toast.success(response.data.message);
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "failed to send OTP",
+      );
+    }
+  },
+);
+
+export const verifyForgottenPassword = createAsyncThunk(
+  "verifyForgottenPassword",
+  async ({ userId, otp }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post("v1/users/verify-otp", {
+        userId,
+        otp,
+      });
+      toast.success(response.data.message);
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "failed to verify OTP",
+      );
+    }
+  },
+);
+
+export const setForgottenPassword = createAsyncThunk(
+  "setForgottenPassword",
+  async ({ userId, password }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post("v1/users/set-password", {
+        userId,
+        password,
+      });
+      toast.success(response.data.message);
+      return response.data.data;
+    } catch (error) {
+      console.log(error);
+
+      return rejectWithValue(
+        error.response?.data?.message || "failed to set password",
+      );
+    }
+  },
+);
+
+export const resendOtp = createAsyncThunk(
+  "resendOtp",
+  async (userId, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post("v1/users/resendOtp", {
+        userId,
+      });
+
+      toast.success(response.data.message);
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to send OTP",
       );
     }
   },
@@ -196,11 +278,32 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    clearSignpError: (state) => {
+      state.signupError = null;
+    },
     clearLoginError: (state) => {
       state.loginError = null;
     },
-    changeCurrentPasswordError: (state) => {
+    clearUpdateUserDetailsError: (state) => {
+      state.updateUserDetailsError = null;
+    },
+    clearChangeCurrentPasswordError: (state) => {
       state.changeCurrentPasswordError = null;
+    },
+    clearVerifyEmailError: (state) => {
+      state.verifyEmailError = null;
+    },
+    clearForgottenPasswordError: (state) => {
+      state.forgottenPasswordError = null;
+    },
+    clearVerifyForgottenPasswordError: (state) => {
+      state.verifyForgottenPasswordError = null;
+    },
+    clearSetForgottenPasswordError: (state) => {
+      state.setForgottenPasswordError = null;
+    },
+    clearResendOtpError: (state) => {
+      state.resendOtpError = null;
     },
   },
   extraReducers: (builder) => {
@@ -325,21 +428,82 @@ const authSlice = createSlice({
       state.deletUserError = action.payload;
     });
     builder.addCase(verifyEmail.pending, (state) => {
-      state.loading =false
+      state.loading = false;
     });
     builder.addCase(verifyEmail.fulfilled, (state, action) => {
-      state.loading =false;
+      state.loading = false;
       state.status = true;
-      state.userData = action.payload
+      state.userData = action.payload;
     });
     builder.addCase(verifyEmail.rejected, (state, action) => {
-      state.loading =false;
+      state.loading = false;
       state.status = false;
-      state.verifyEmailError = action.payload
+      state.verifyEmailError = action.payload;
+    });
+    builder.addCase(forgottenPassword.pending, (state) => {
+      state.loading = false;
+    });
+    builder.addCase(forgottenPassword.fulfilled, (state, action) => {
+      state.loading = false;
+      state.status = true;
+      state.userData = action.payload;
+    });
+    builder.addCase(forgottenPassword.rejected, (state, action) => {
+      state.loading = false;
+      state.status = false;
+      state.forgottenPasswordError = action.payload;
+    });
+    builder.addCase(verifyForgottenPassword.pending, (state) => {
+      state.loading = false;
+    });
+    builder.addCase(verifyForgottenPassword.fulfilled, (state, action) => {
+      state.loading = false;
+      state.status = true;
+      state.userData = action.payload;
+    });
+    builder.addCase(verifyForgottenPassword.rejected, (state, action) => {
+      state.loading = false;
+      state.status = false;
+      state.verifyForgottenPasswordError = action.payload;
+    });
+    builder.addCase(setForgottenPassword.pending, (state) => {
+      state.loading = false;
+    });
+    builder.addCase(setForgottenPassword.fulfilled, (state, action) => {
+      state.loading = false;
+      state.status = true;
+      state.userData = action.payload;
+    });
+    builder.addCase(setForgottenPassword.rejected, (state, action) => {
+      state.loading = false;
+      state.status = false;
+      state.setForgottenPasswordError = action.payload;
+    });
+    builder.addCase(resendOtp.pending, (state) => {
+      state.loading = false;
+    });
+    builder.addCase(resendOtp.fulfilled, (state, action) => {
+      state.loading = false;
+      state.status = true;
+      state.userData = action.payload;
+    });
+    builder.addCase(resendOtp.rejected, (state, action) => {
+      state.loading = false;
+      state.status = false;
+      state.resendOtpError = action.payload;
     });
   },
 });
 
 export default authSlice.reducer;
-export const { clearLoginError, changeCurrentPasswordError } =
-  authSlice.actions;
+export const {
+  clearSignpError,
+  clearLoginError,
+  clearUpdateUserDetailsError,
+  clearChangeCurrentPasswordError,
+  clearVerifyEmailError,
+  clearForgottenPasswordError,
+  clearVerifyForgottenPasswordError,
+  clearSetForgottenPasswordError,
+  clearResendOtpError,
+} = authSlice.actions;
