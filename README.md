@@ -1,3 +1,6 @@
+🚀 Live Demo
+https://ai-ticket-assistance-frontend.vercel.app
+
 An AI-powered ticket management system built with the MERN stack that automatically analyzes support tickets and helps moderators/admins prioritize and resolve issues efficiently.
 
 Features
