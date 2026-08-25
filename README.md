@@ -34,6 +34,25 @@ Mongoose
 JWT
 Inngest
 Groq AI
+
+Architecture diagram
+User
+  ↓
+React Frontend
+  ↓
+Express API
+  ↓
+MongoDB
+  ↓
+Inngest Event
+  ↓
+Groq AI
+  ↓
+Ticket Analysis
+  ↓
+Priority + Helpful Notes + Related Skills
+
+
 -------------------------------------------------------------------------------
 Login, Create Account & Forget Password.
 <img width="1366" height="587" alt="Screenshot (181)" src="https://github.com/user-attachments/assets/2927d4ca-d2b2-48fc-a489-d9cb34a72b33" />
