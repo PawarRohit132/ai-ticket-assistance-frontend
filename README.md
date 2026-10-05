@@ -1,19 +1,73 @@
-Smarter Tickets, Faster Support
-Ticket AI is a next-generation platform that automates ticket management, intelligently prioritizes issues, and empowers your team to deliver exceptional support with maximum efficiency.
--------------------------------------------------------------------------------
-Login & Create Account and email verify by OTP.
-<img width="1366" height="594" alt="Screenshot (172)" src="https://github.com/user-attachments/assets/ebd19216-3d01-48c7-bb27-7ef480bb451a" />
+🚀 Live Demo
+https://ai-ticket-assistance-frontend.vercel.app
+
+An AI-powered ticket management system built with the MERN stack that automatically analyzes support tickets and helps moderators/admins prioritize and resolve issues efficiently.
+
+Features
+🔐 JWT Authentication
+📧 Email OTP Verification
+🎫 Create & manage support tickets
+🤖 AI-powered ticket analysis
+⚡ Inngest background workflows
+🧠 Automatic priority detection
+📝 AI-generated helpful notes
+🛠️ Related skills detection
+👨‍💼 Admin panel
+🔎 Ticket search
+📊 Ticket status management
+
+Tech Stack
+
+Frontend
+
+React
+Vite
+Tailwind CSS
+Redux Toolkit
+
+Backend
+
+Node.js
+Express.js
+MongoDB
+Mongoose
+JWT
+Inngest
+Groq AI
+
+Architecture diagram
+User
+  ↓
+React Frontend
+  ↓
+Express API
+  ↓
+MongoDB
+  ↓
+Inngest Event
+  ↓
+Groq AI
+  ↓
+Ticket Analysis
+  ↓
+Priority + Helpful Notes + Related Skills
+
 
 -------------------------------------------------------------------------------
-Create your ticket with title & description and simply click on send button.
+Login, Create Account & Forget Password.
+<img width="1366" height="587" alt="Screenshot (181)" src="https://github.com/user-attachments/assets/2927d4ca-d2b2-48fc-a489-d9cb34a72b33" />
+
+
+-------------------------------------------------------------------------------
+Create your ticket with title & description.
 <img width="1366" height="569" alt="Screenshot (173)" src="https://github.com/user-attachments/assets/49d98e07-9d69-4ff9-a00c-85094ee4ee1a" />
 
 -------------------------------------------------------------------------------
-List of your created tickets.
+List of created tickets.
 <img width="1366" height="540" alt="Screenshot (174)" src="https://github.com/user-attachments/assets/7b99f6d2-baef-45a1-838d-7991cf7ab265" />
 
 -------------------------------------------------------------------------------
-When you select your ticket you see ticket status, assigned to moderator or admin & createdAt.
+Ticket assigned to moderator or admin & createdAt.
 <img width="1366" height="575" alt="Screenshot (175)" src="https://github.com/user-attachments/assets/150674a4-b6ff-4af5-bc4b-1b65c7799b55" />
 
 -------------------------------------------------------------------------------
@@ -22,8 +76,9 @@ When moderator and admin click the ticket solved button your ticket is solved & 
 <img width="1366" height="597" alt="Screenshot (176)" src="https://github.com/user-attachments/assets/688836ad-adde-42a1-b3ad-a070fc680fdc" />
 
 -------------------------------------------------------------------------------
-We have admin panel also.
-<img width="1366" height="572" alt="Screenshot (177)" src="https://github.com/user-attachments/assets/e8e1bf50-f607-407f-86f2-7b46a1087c32" />
+Admin panel.
+<img width="1366" height="606" alt="Screenshot (182)" src="https://github.com/user-attachments/assets/d46f5741-efea-49e6-b496-13fe0f07e728" />
+
 
 
 
